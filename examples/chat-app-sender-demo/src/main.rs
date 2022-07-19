@@ -9,16 +9,18 @@ wit_bindgen_rust::import!("../../wit/mq.wit");
 wit_error_rs::impl_error!(mq::Error);
 
 fn main() -> Result<()> {
-    let kv = get_kv("my-container")?;
-    let mq = get_mq("wasi-cloud-queue")?;
+    let kv_store = Kv::open("my-container")?;
+    let msg_queue = Mq::open("wasi-cloud-queue")?;
 
     let mut msg_counter = 0;
     loop {
-        println!("📨 write a message to send: ");
+        println!("📧 write a message to send: ");
         let mut msg = "".to_string();
         std::io::stdin().read_line(&mut msg)?;
-        send(&mq, msg.as_bytes())?;
-        set(&kv, &format!("message-{}", msg_counter), msg.as_bytes())?;
+        msg_queue.send(msg.as_bytes())?;
+        println!("📨 sent message");
+        kv_store.set(&format!("message-{}", msg_counter), msg.as_bytes())?;
+        println!("🔑 added message to kv store");
         msg_counter += 1;
     }
 }

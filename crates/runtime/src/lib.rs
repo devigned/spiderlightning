@@ -2,7 +2,7 @@ pub mod resource;
 use std::collections::HashMap;
 
 use anyhow::Result;
-use resource::{DataT, ResourceConfig, ResourceMap, RuntimeResource};
+use resource::{Ctx, GuestState, ResourceConfig, RuntimeResource};
 use wasi_cap_std_sync::WasiCtxBuilder;
 use wasi_common::WasiCtx;
 use wasmtime::{Config, Engine, Instance, Linker, Module, Store};
@@ -10,15 +10,16 @@ use wasmtime_wasi::*;
 
 /// A wasmtime runtime context to be passed to a wasm module.
 #[derive(Default)]
-pub struct RuntimeContext<T> {
+pub struct RuntimeContext<Host> {
     pub wasi: Option<WasiCtx>,
-    pub data: HashMap<String, T>,
+    pub data: HashMap<String, Host>,
+    pub state: GuestState,
 }
 
 /// A wasmtime-based runtime builder.
 pub struct Builder {
-    linker: Linker<RuntimeContext<DataT>>,
-    store: Store<RuntimeContext<DataT>>,
+    linker: Linker<Ctx>,
+    store: Store<Ctx>,
     engine: Engine,
     pub config: Option<Vec<(String, String)>>,
 }
@@ -33,6 +34,7 @@ impl Builder {
         let ctx = RuntimeContext {
             wasi: Some(wasi),
             data: HashMap::new(),
+            state: GuestState::default(),
         };
 
         let store = Store::new(&engine, ctx);
@@ -56,25 +58,21 @@ impl Builder {
     pub fn link_capability<T: RuntimeResource>(
         &mut self,
         config: ResourceConfig,
+        state: T::State,
     ) -> Result<&mut Self> {
-        self.store.data_mut().data.insert(config, T::build_data()?);
+        self.store
+            .data_mut()
+            .data
+            .insert(config, T::build_data(state)?);
         T::add_to_linker(&mut self.linker)?;
         Ok(self)
     }
 
-    /// Link resource maps
-    pub fn link_resource_map(&mut self, rd_map: ResourceMap) -> Result<&mut Self> {
-        for (_k, v) in self.store.data_mut().data.iter_mut() {
-            v.add_resource_map(rd_map.clone())?;
-        }
-        Ok(self)
-    }
-
     /// Instantiate the guest module.
-    pub fn build(mut self, module: &str) -> Result<(Store<RuntimeContext<DataT>>, Instance)> {
+    pub fn build(mut self, module: &str) -> Result<(Engine, Store<Ctx>, Instance)> {
         let module = Module::from_file(&self.engine, module)?;
         let instance = self.linker.instantiate(&mut self.store, &module)?;
-        Ok((self.store, instance))
+        Ok((self.engine, self.store, instance))
     }
 }
 
