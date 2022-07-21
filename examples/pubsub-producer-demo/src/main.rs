@@ -2,7 +2,7 @@ use anyhow::Result;
 use std::{thread, time::Duration};
 
 use pubsub::*;
-wit_bindgen_rust::import!("../../wit/pubsub.wit");
+wit_bindgen_rust::import!("../../wit/v0.1/pubsub.wit");
 wit_error_rs::impl_error!(Error);
 
 fn main() -> Result<()> {

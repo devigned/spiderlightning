@@ -1,7 +1,7 @@
 use anyhow::Result;
 
 use mq::*;
-wit_bindgen_rust::import!("../../wit/mq.wit");
+wit_bindgen_rust::import!("../../wit/v0.1/mq.wit");
 wit_error_rs::impl_error!(Error);
 
 fn main() -> Result<()> {

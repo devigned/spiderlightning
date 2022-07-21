@@ -15,9 +15,9 @@ use runtime::{
 use runtime_configs::{Configs, ConfigsState};
 use std::sync::{Arc, Mutex};
 
-use spiderlightning::core::slightfile::TomlFile;
+use spiderlightning::core::slightfile::Slightfile;
 
-pub fn handle_run(module: &str, toml: &TomlFile, toml_file_path: &str) -> Result<()> {
+pub fn handle_run(module: &str, toml: &Slightfile, toml_file_path: &str) -> Result<()> {
     tracing::info!("Starting slight");
 
     let resource_map = Arc::new(Mutex::new(Map::default()));

@@ -2,7 +2,7 @@
 use anyhow::Result;
 
 use kv::*;
-wit_bindgen_rust::import!("../../wit/kv.wit");
+wit_bindgen_rust::import!("../../wit/v0.1/kv.wit");
 wit_error_rs::impl_error!(Error);
 
 fn main() -> Result<()> {

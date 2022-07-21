@@ -34,14 +34,14 @@ mod kv_test {
     #[test]
     fn filekv_test() -> Result<()> {
         let file_config = "./tests/kv-test/filekv.toml";
-        run(SLIGHT, vec!["-c", file_config, "run", "-m", KV_TEST_MODULE]);
+        run(SLIGHT, vec!["run", "-c", file_config, "-m", KV_TEST_MODULE]);
         Ok(())
     }
 
     #[test]
     fn azblobkv_test() -> Result<()> {
         let file_config = "./tests/kv-test/azblobkv.toml";
-        run(SLIGHT, vec!["-c", file_config, "run", "-m", KV_TEST_MODULE]);
+        run(SLIGHT, vec!["run", "-c", file_config, "-m", KV_TEST_MODULE]);
         Ok(())
     }
 }

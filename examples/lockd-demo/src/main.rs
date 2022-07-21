@@ -4,7 +4,7 @@ use std::{
 };
 
 use lockd::*;
-wit_bindgen_rust::import!("../../wit/lockd.wit");
+wit_bindgen_rust::import!("../../wit/v0.1/lockd.wit");
 wit_error_rs::impl_error!(Error);
 
 use anyhow::Result;

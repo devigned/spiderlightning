@@ -11,7 +11,7 @@ use runtime::{
 
 use pubsub::*;
 use uuid::Uuid;
-wit_bindgen_wasmtime::export!("../../wit/pubsub.wit");
+wit_bindgen_wasmtime::export!("../../wit/v0.1/pubsub.wit");
 wit_error_rs::impl_error!(Error);
 wit_error_rs::impl_from!(anyhow::Error, Error::ErrorWithDescription);
 wit_error_rs::impl_from!(std::string::FromUtf8Error, Error::ErrorWithDescription);

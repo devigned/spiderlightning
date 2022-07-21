@@ -1,11 +1,11 @@
 use anyhow::Result;
 
 use kv::*;
-wit_bindgen_rust::import!("../../wit/kv.wit");
+wit_bindgen_rust::import!("../../wit/v0.1/kv.wit");
 wit_error_rs::impl_error!(kv::Error);
 
 use mq::*;
-wit_bindgen_rust::import!("../../wit/mq.wit");
+wit_bindgen_rust::import!("../../wit/v0.1/mq.wit");
 wit_error_rs::impl_error!(mq::Error);
 
 fn main() -> Result<()> {

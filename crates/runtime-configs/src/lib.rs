@@ -9,7 +9,7 @@ use runtime::resource::{
 };
 use std::sync::{Arc, Mutex};
 use uuid::Uuid;
-wit_bindgen_wasmtime::export!("../../wit/configs.wit");
+wit_bindgen_wasmtime::export!("../../wit/v0.1/configs.wit");
 wit_error_rs::impl_error!(configs::Error);
 wit_error_rs::impl_from!(anyhow::Error, configs::Error::ErrorWithDescription);
 

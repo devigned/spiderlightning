@@ -18,7 +18,7 @@ use kv::*;
 
 pub mod azure;
 
-wit_bindgen_wasmtime::export!("../../wit/kv.wit");
+wit_bindgen_wasmtime::export!("../../wit/v0.1/kv.wit");
 wit_error_rs::impl_error!(kv::Error);
 wit_error_rs::impl_from!(anyhow::Error, kv::Error::ErrorWithDescription);
 wit_error_rs::impl_from!(std::string::FromUtf8Error, kv::Error::ErrorWithDescription);

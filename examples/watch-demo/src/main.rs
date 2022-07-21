@@ -3,11 +3,11 @@ use anyhow::Result;
 use event_handler::Event;
 
 use kv::*;
-wit_bindgen_rust::import!("../../wit/kv.wit");
+wit_bindgen_rust::import!("../../wit/v0.1/kv.wit");
 wit_error_rs::impl_error!(Error);
 wit_error_rs::impl_error!(events::Error);
-wit_bindgen_rust::import!("../../wit/events.wit");
-wit_bindgen_rust::export!("../../wit/event-handler.wit");
+wit_bindgen_rust::import!("../../wit/v0.1/events.wit");
+wit_bindgen_rust::export!("../../wit/v0.1/event-handler.wit");
 
 fn main() -> Result<()> {
     // application devleoper does not need to know the host implementation details.

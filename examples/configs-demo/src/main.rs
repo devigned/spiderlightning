@@ -1,7 +1,7 @@
 use anyhow::Result;
 
 use configs::*;
-wit_bindgen_rust::import!("../../wit/configs.wit");
+wit_bindgen_rust::import!("../../wit/v0.1/configs.wit");
 wit_error_rs::impl_error!(Error);
 
 fn main() -> Result<()> {

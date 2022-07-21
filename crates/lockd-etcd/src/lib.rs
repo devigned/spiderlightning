@@ -3,7 +3,7 @@ use std::sync::{Arc, Mutex};
 pub use lockd::add_to_linker;
 use lockd::*;
 
-wit_bindgen_wasmtime::export!("../../wit/lockd.wit");
+wit_bindgen_wasmtime::export!("../../wit/v0.1/lockd.wit");
 wit_error_rs::impl_error!(Error);
 wit_error_rs::impl_from!(anyhow::Error, Error::ErrorWithDescription);
 wit_error_rs::impl_from!(std::string::FromUtf8Error, Error::ErrorWithDescription);

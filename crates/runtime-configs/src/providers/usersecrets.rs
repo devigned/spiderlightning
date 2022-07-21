@@ -4,7 +4,7 @@ use anyhow::{bail, Result};
 use short_crypt::ShortCrypt;
 use spiderlightning::core::{
     secret::{create_secret, get_key},
-    slightfile::TomlFile,
+    slightfile::Slightfile,
 };
 
 pub fn get(key: &str, toml_file_path: &str) -> Result<Vec<u8>> {
@@ -18,7 +18,7 @@ pub fn get(key: &str, toml_file_path: &str) -> Result<Vec<u8>> {
     // serialize toml file to get key
     let toml_file_path = toml_file_path;
     let toml_file_contents = std::fs::read_to_string(toml_file_path)?;
-    let toml = toml::from_str::<TomlFile>(&toml_file_contents)?;
+    let toml = toml::from_str::<Slightfile>(&toml_file_contents)?;
     if toml.secret_settings.is_none() {
         bail!("failed because toml file has no secrets");
     }
@@ -54,7 +54,7 @@ pub fn set(key: &str, value: &[u8], toml_file_path: &str) -> Result<()> {
         .create(true)
         .open(&toml_file_path)?;
     let toml_file_contents = std::fs::read_to_string(&toml_file_path)?;
-    let mut toml = toml::from_str::<TomlFile>(&toml_file_contents)?;
+    let mut toml = toml::from_str::<Slightfile>(&toml_file_contents)?;
     create_secret(key, std::str::from_utf8(value)?, &mut toml, &mut toml_file)
 }
 

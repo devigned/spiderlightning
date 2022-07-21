@@ -2,7 +2,7 @@ use std::time::SystemTime;
 
 use anyhow::Result;
 use pubsub::*;
-wit_bindgen_rust::import!("../../wit/pubsub.wit");
+wit_bindgen_rust::import!("../../wit/v0.1/pubsub.wit");
 wit_error_rs::impl_error!(Error);
 
 fn main() -> Result<()> {

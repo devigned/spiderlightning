@@ -21,7 +21,7 @@ use runtime::{
 use wasmtime::Store;
 
 use crate::events::add_to_linker;
-wit_bindgen_wasmtime::export!("../../wit/events.wit");
+wit_bindgen_wasmtime::export!("../../wit/v0.1/events.wit");
 wit_error_rs::impl_error!(Error);
 wit_error_rs::impl_from!(anyhow::Error, Error::ErrorWithDescription);
 

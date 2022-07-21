@@ -1,7 +1,9 @@
+use std::fs::File;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct TomlFile {
+pub struct Slightfile {
     pub specversion: Option<String>,
     pub secret_store: Option<String>,
     pub secret_settings: Option<Vec<Config>>,
@@ -23,4 +25,11 @@ impl Config {
     pub fn new(name: String, value: String) -> Self {
         Self { name, value }
     }
+}
+
+pub struct SlightfileInfo {
+    pub slightfile: Slightfile, 
+    pub path: String,
+    pub contents: String,
+    pub file: File
 }
