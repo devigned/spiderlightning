@@ -1,5 +1,6 @@
-use std::fs::File;
+use std::fs::{File, OpenOptions};
 
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -28,8 +29,24 @@ impl Config {
 }
 
 pub struct SlightfileInfo {
-    pub slightfile: Slightfile, 
+    pub slightfile: Slightfile,
     pub path: String,
     pub contents: String,
-    pub file: File
+    pub file: File,
+}
+
+impl SlightfileInfo {
+    pub fn new(path: &str) -> Result<SlightfileInfo> {
+        let toml_content = std::fs::read_to_string(&path)?;
+        Ok(SlightfileInfo {
+            path: path.to_string(),
+            file: OpenOptions::new()
+                .read(true)
+                .write(true)
+                .create(true)
+                .open(&path)?,
+            slightfile: toml::from_str::<Slightfile>(&toml_content)?,
+            contents: toml_content,
+        })
+    }
 }
