@@ -23,7 +23,7 @@ futures = "0.3"
 async-trait = "0.1"
 tokio = { version = "1", features = ["full"] }
 # pubsub.confluent_apache_kafka deps
-rdkafka = { version = "0.28", features = ["cmake-build", "ssl"] }
+rdkafka = { version = "0.27", features = ["cmake-build", "ssl-vendored"] }
 # pubsub.mosquitto
 mosquitto-rs = { version = "0.4.0", features = ["default"]}
 async-channel = "1.5"
